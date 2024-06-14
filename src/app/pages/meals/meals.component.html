@@ -50,15 +50,24 @@
                                 </ul>
                             </div>
                         </div>
-                        <div>
+                        <div class="relative dropdown" [appDropdown]="'filterDropdown'">
                             <div class="px-6 h-12 rounded-[50px] bg-light flex items-center gap-3 cursor-pointer">
-                                <span class="flex text-base text-very-dark font-medium">
+                                <span class="flex items-center gap-1 text-base text-very-dark font-medium">
                                     <span>Sort by:</span>
-                                    <span class=" font-bold">Name</span>
+                                    <span class=" font-bold">{{ selectedSort }}</span>
                                 </span>
                                 <img src="./images/Expand_down.svg" alt="">
                             </div>
+                            <ul class="dropdown-content" id="filterDropdown">
+                                @for (option of sortOptions; track $index) {
+                                <li class="dropdown-option" (click)="selectSort(option)">
+                                    {{option}}
+                                </li>
+                                }
+
+                            </ul>
                         </div>
+
                     </div>
                     <ul class=" grid grid-cols-3 gap-8" *ngIf="mealList">
                         @for (meal of mealList; track $index) {

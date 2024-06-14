@@ -9,11 +9,12 @@ import {
   ReactiveFormsModule,
   FormControl,
 } from '@angular/forms';
+import { DropdownDirective } from '../../directives/dropdown.directive';
 
 @Component({
   selector: 'app-meals',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, DropdownDirective],
   templateUrl: './meals.component.html',
   styleUrls: ['./meals.component.scss'],
 })
@@ -21,10 +22,14 @@ export class MealsComponent implements AfterViewInit {
   categorieList!: any;
   currentCategory!: string;
   mealList!: any;
+  filteredMealList: any[] = [];
   selectedCategoryIndex!: number;
 
   searchForm!: FormGroup;
   searchResults: any[] = [];
+
+  selectedSort = 'Name';
+  sortOptions = ['Name', 'Category', 'Area', 'Tags', 'Ingredient'];
 
   constructor(private api: ApiService, private fb: FormBuilder) {
     this.searchForm = this.fb.group({
@@ -51,6 +56,7 @@ export class MealsComponent implements AfterViewInit {
       this.api.getMealsByCategory(this.currentCategory).subscribe((resp) => {
         this.mealList = resp;
         this.mealList = this.mealList.meals;
+        // console.log(this.mealList);
       });
     });
 
@@ -61,7 +67,7 @@ export class MealsComponent implements AfterViewInit {
         switchMap((value) => this.api.searMeal(value))
       )
       .subscribe((results) => {
-        console.log(results);
+        // console.log(results);
 
         this.searchResults = results.meals || [];
       });
@@ -85,5 +91,51 @@ export class MealsComponent implements AfterViewInit {
   clearSearch(): void {
     this.search.reset();
     this.searchResults = [];
+  }
+
+  selectSort(sortType: string) {
+    this.selectedSort = sortType;
+    this.applySort();
+    console.log(this.filteredMealList);
+  }
+
+  applySort() {
+    switch (this.selectedSort) {
+      case 'Name':
+        this.filteredMealList.sort((a, b) =>
+          a.strMeal.localeCompare(b.strMeal)
+        );
+        break;
+      case 'Category':
+        this.filteredMealList.sort((a, b) =>
+          a.strCategory.localeCompare(b.strCategory)
+        );
+        break;
+      case 'Area':
+        this.filteredMealList.sort((a, b) =>
+          a.strArea.localeCompare(b.strArea)
+        );
+        break;
+      case 'Tags':
+        this.filteredMealList.sort((a, b) =>
+          (a.strTags || '').localeCompare(b.strTags || '')
+        );
+        break;
+      case 'Ingredient':
+        // Assuming you have a primary ingredient to sort by
+        this.filteredMealList.sort((a, b) =>
+          (a.strIngredient1 || '').localeCompare(b.strIngredient1 || '')
+        );
+        break;
+      case 'Date Added':
+        // Assuming you have a dateAdded property
+        this.filteredMealList.sort(
+          (a, b) =>
+            new Date(b.dateAdded).getTime() - new Date(a.dateAdded).getTime()
+        );
+        break;
+      default:
+        break;
+    }
   }
 }
