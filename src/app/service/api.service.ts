@@ -1,36 +1,27 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
+  private baseUrl = 'https://www.themealdb.com/api/json/v1/1';
   constructor(private http: HttpClient) {}
 
-  // fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
-  // .then(response => response.json())
-  // .then(data => {
-  //   console.log(data)
-  // })
-  // .catch(error => {
-  //   console.log(error)
-  // })
-
   getRecipes() {
-    return this.http.get(
-      'https://www.themealdb.com/api/json/v1/1/categories.php'
-    );
+    return this.http.get(`${this.baseUrl}/categories.php`);
   }
 
   getMealsByCategory(category: string) {
-    return this.http.get(
-      `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
-    );
+    return this.http.get(`${this.baseUrl}/filter.php?c=${category}`);
   }
 
   getDetailMeal(id: string) {
-    return this.http.get(
-      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`
-    );
+    return this.http.get(`${this.baseUrl}/lookup.php?i=${id}`);
+  }
+
+  searMeal(name: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/search.php?s=${name}`);
   }
 }

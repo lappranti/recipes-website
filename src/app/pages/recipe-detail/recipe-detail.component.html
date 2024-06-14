@@ -40,8 +40,8 @@
                         <span
                             class="text-base h-8 text-light font-bold after:absolute after:left-0 after:h-full after:w-4 after:bg-secondare relative flex items-center gap-3 after:rounded-xl"><span
                                 class="ml-9">Instructions</span></span>
-                        <div class="text-base text-light">
-                            {{mealDetails.strInstructions}}
+                        <div class="text-base text-light" [innerHTML]="formatInstructions(mealDetails.strInstructions)">
+
                         </div>
                     </div>
                 </div>

@@ -6,25 +6,49 @@
         <div class=" flex justify-center px-10">
             <div class=" max-w-7xl w-full flex gap-8 ">
                 <div class="w-56 flex flex-col gap-8 mr-8">
-                    <h2 class="text-2xl text-light font-semibold">Categories</h2>
+                    <div class="h-12 flex flex-col justify-between">
+                        <h2 class="text-2xl text-light font-semibold ">Categories</h2>
+                        <span class="text-sm text-semi-dark font-semibold">{{currentCategory}}</span>
+                    </div>
                     <ul class="flex flex-col gap-3" *ngIf="categorieList">
                         @for (category of categorieList; track $index) {
                         <li [ngClass]="{'categorySelected': $index === selectedCategoryIndex}"
                             (click)="selectCategory($index,category.strCategory)"
-                            class="categoryMeny group w-64 h-14 border border-semi-dark rounded-xl flex items-center gap-6 overflow-x-hidden bg-transparent hover:bg-primary transition-all duration-300 cursor-pointer">
+                            class="categoryMeny group text-light w-64 h-14 border border-semi-dark rounded-xl flex items-center gap-6 overflow-x-hidden bg-transparent hover:bg-primary transition-all duration-300 cursor-pointer">
                             <img [src]="category.strCategoryThumb" alt="" class="w-20 h-auto rounded-r-3xl -ml-10">
                             <span
-                                class="text-xs font-semibold text-light group-hover:text-very-dark">{{category.strCategory}}</span>
+                                class="text-xs font-semibold  group-hover:text-very-dark">{{category.strCategory}}</span>
                         </li>
                         }
                     </ul>
                 </div>
                 <div class="w-auto flex flex-col gap-8">
                     <div class="flex justify-between items-center ">
-                        <div class="flex items-center relative max-w-[432px] w-full">
-                            <img src="./images/Search.svg" alt="" class="absolute left-4">
-                            <input type="text" placeholder="Search recipes and more..."
-                                class="text-base text-[#394150] font-medium pl-12 h-12 w-full  border-2 border-[#394150] rounded-[50px] bg-transparent outline-none">
+                        <div class="flex flex-col gap-2 relative max-w-[432px] w-full">
+                            <div class="flex items-center relative ">
+                                <img src="./images/Search.svg" alt="" class="absolute left-4">
+                                <input type="text" placeholder="Search recipes and more..." [formControl]="search"
+                                    class="text-base text-[#394150] font-medium pl-12 h-12 w-full  border-2 border-[#394150] rounded-[50px] bg-transparent outline-none">
+                                <span *ngIf="search.value && search.value!=''" (click)="clearSearch()"
+                                    class="text-semi-dark text-xl absolute right-4 w-8 h-8 flex justify-center items-center cursor-pointer rounded-full bg-transparent hover:bg-semi-dark hover:text-very-dark ">X</span>
+                            </div>
+                            <!-- Afficher les résultats de recherche -->
+                            <div class="absolute left-0 w-full top-14 h-72 overflow-y-auto scrollbar-hide z-50"
+                                *ngIf="searchResults.length > 0">
+                                <ul class="bg-semi-dark rounded-xl overflow-hidden">
+                                    <li *ngFor="let meal of searchResults" [routerLink]="['/home/meals/', meal.idMeal]">
+                                        <div
+                                            class="group p-2  flex  gap-3  overflow-hidden border-b border-very-dark cursor-pointer">
+                                            <img [src]="meal.strMealThumb" alt="" class="w-11 h-11 rounded-xl">
+                                            <div
+                                                class="flex flex-col justify-between  text-base text-light font-medium">
+                                                <span class="text-on-1-line font-bold ">{{meal.strMeal}}</span>
+                                                <span class="text-on-1-line">{{meal.strCategory}}</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                         <div>
                             <div class="px-6 h-12 rounded-[50px] bg-light flex items-center gap-3 cursor-pointer">

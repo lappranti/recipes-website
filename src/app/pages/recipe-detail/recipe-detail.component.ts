@@ -49,4 +49,7 @@ export class RecipeDetailComponent {
   goBack(): void {
     this.location.back();
   }
+  formatInstructions(instructions: string): string {
+    return instructions.replace(/(?:\r\n|\r\n\r|\n)/g, '<br>');
+  }
 }

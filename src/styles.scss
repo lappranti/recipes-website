@@ -72,6 +72,18 @@
     .categorySelected {
         transition: all .3s ease-in;
         background-color: #FEBD2E;
-        color: #0E1325;
+        color: #0E1325 !important;
+    }
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari, and Opera */
     }
 }
