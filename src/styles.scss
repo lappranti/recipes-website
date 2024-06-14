@@ -1,1 +1,77 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        font-family: "Sora", sans-serif;
+        box-sizing: border-box;
+    }
+
+    @font-face {
+        font-family: "Sora ExtraLight";
+        font-style: normal;
+        font-weight: 200;
+        font-display: swap;
+        src: url(../public/fonts/Sora-ExtraLight.ttf) format("woff2");
+    }
+
+    @font-face {
+        font-family: "Sora Light";
+        font-style: normal;
+        font-weight: 300;
+        font-display: swap;
+        src: url(../public/fonts/Sora-Light.ttf) format("woff2");
+    }
+
+    @font-face {
+        font-family: "Sora Medium";
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url(../public/fonts/Sora-Medium.ttf) format("woff2");
+    }
+
+    @font-face {
+        font-family: "Sora";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url(../public/fonts/Sora-Regular.ttf) format("woff2");
+    }
+
+    @font-face {
+        font-family: "Sora SemiBold";
+        font-style: normal;
+        font-weight: 600;
+        font-display: swap;
+        src: url(../public/fonts/Sora-SemiBold.ttf) format("woff2");
+    }
+
+    @font-face {
+        font-family: "Sora Bold";
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url(../public/fonts/Sora-Bold.ttf) format("woff2");
+    }
+
+
+
+}
+
+@layer utilities {
+    .text-on-1-line {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+    }
+
+    .categorySelected {
+        transition: all .3s ease-in;
+        background-color: #FEBD2E;
+        color: #0E1325;
+    }
+}

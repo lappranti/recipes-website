@@ -1,0 +1,51 @@
+<div class="w-full min-h-screen bg-very-dark flex justify-center p-8">
+    <div class=" max-w-7xl w-full flex flex-col gap-8 ">
+        <div class="flex justify-between items-center">
+            <img src="./images/logo-light.svg" alt="">
+            <div (click)="goBack()" class="px-6 h-12 rounded-[50px] bg-light flex items-center gap-4 cursor-pointer">
+                <img src="./images/Expand_left.svg" alt="">
+                <span class="text-base text-very-dark font-medium">Back to categories</span>
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <div class="max-w-[616px] w-full flex flex-col gap-8" *ngIf="mealDetails">
+                <div class="max-h-[400px] rounded-lg">
+                    <img [src]="mealDetails.strMealThumb" alt="" class=" rounded-lg w-full max-h-full">
+                </div>
+                <div class="flex flex-col gap-10">
+                    <div class="flex flex-col gap-5">
+                        <span class=" text-4xl font-semibold text-light">{{mealDetails.strMeal}}</span>
+                        <div class="flex gap-4">
+                            <span class="text-light text-sm h-9 flex items-center gap-2 rounded-3xl px-6 bg-semi-dark">
+                                category: <span class="font-bold"> {{mealDetails.strCategory}}</span>
+                            </span>
+                            <span class="text-light text-sm h-9 flex items-center gap-2 rounded-3xl px-6 bg-semi-dark">
+                                area: <span class="font-bold">{{mealDetails.strArea}}</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <span
+                            class="text-base h-8 text-light font-bold after:absolute after:left-0 after:h-full after:w-4 after:bg-primary relative flex items-center gap-3 after:rounded-xl"><span
+                                class="ml-9">Ingredients</span></span>
+                        <ul class="flex flex-col gap-3 list-disc pl-8">
+                            @for (ingredient of ingredients; track $index) {
+                            <li class="text-base text-light ">
+                                {{ingredient}}
+                            </li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-4">
+                        <span
+                            class="text-base h-8 text-light font-bold after:absolute after:left-0 after:h-full after:w-4 after:bg-secondare relative flex items-center gap-3 after:rounded-xl"><span
+                                class="ml-9">Instructions</span></span>
+                        <div class="text-base text-light">
+                            {{mealDetails.strInstructions}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
