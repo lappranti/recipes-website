@@ -1,0 +1,32 @@
+.pagination {
+    margin: 60px auto;
+
+    .page {
+        cursor: pointer;
+        width: 39.429px;
+        height: 39.429px;
+        font-size: 16.898px;
+        font-weight: 400;
+        border: 1px solid #FEBD2E;
+        color: #FEBD2E;
+        transition: all .3s;
+        border-radius: 6px;
+        margin: 0px 3px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.active,
+        &:hover {
+            background: #FEBD2E;
+            color: #fff;
+        }
+    }
+
+    .nav-direction {
+        border: none;
+        color: #FEBD2E;
+        font-weight: bold;
+    }
+}

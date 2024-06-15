@@ -1,4 +1,9 @@
-import { AfterViewInit, Component } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ApiService } from '../../service/api.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -10,15 +15,22 @@ import {
   FormControl,
 } from '@angular/forms';
 import { DropdownDirective } from '../../directives/dropdown.directive';
+import { PaginationComponent } from '../../components/pagination/pagination.component';
 
 @Component({
   selector: 'app-meals',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, DropdownDirective],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    DropdownDirective,
+    PaginationComponent,
+  ],
   templateUrl: './meals.component.html',
   styleUrls: ['./meals.component.scss'],
 })
-export class MealsComponent implements AfterViewInit {
+export class MealsComponent implements OnInit {
   categorieList!: any;
   currentCategory!: string;
   mealList!: any;
@@ -31,13 +43,21 @@ export class MealsComponent implements AfterViewInit {
   selectedSort = 'Name';
   sortOptions = ['Name', 'Category', 'Area', 'Tags', 'Ingredient'];
 
-  constructor(private api: ApiService, private fb: FormBuilder) {
+  currentPage: number = 1;
+  itemsPerPage: number = 12;
+  pageMeals: any[] = [];
+
+  constructor(
+    private api: ApiService,
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
+  ) {
     this.searchForm = this.fb.group({
       search: [''],
     });
   }
 
-  ngAfterViewInit(): void {
+  ngOnInit(): void {
     this.api.getRecipes().subscribe((resp) => {
       this.categorieList = resp;
       this.categorieList = this.categorieList.categories;
@@ -56,7 +76,7 @@ export class MealsComponent implements AfterViewInit {
       this.api.getMealsByCategory(this.currentCategory).subscribe((resp) => {
         this.mealList = resp;
         this.mealList = this.mealList.meals;
-        // console.log(this.mealList);
+        console.log(this.mealList);
       });
     });
 
@@ -81,6 +101,7 @@ export class MealsComponent implements AfterViewInit {
     this.api.getMealsByCategory(this.currentCategory).subscribe((resp) => {
       this.mealList = resp;
       this.mealList = this.mealList.meals;
+      this.currentPage = 1;
     });
   }
 
@@ -137,5 +158,10 @@ export class MealsComponent implements AfterViewInit {
       default:
         break;
     }
+  }
+
+  onItemsChange(meals: any) {
+    this.pageMeals = meals;
+    this.cdr.detectChanges(); // Forcer la détection des changements
   }
 }

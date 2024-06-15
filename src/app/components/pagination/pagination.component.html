@@ -1,0 +1,14 @@
+<nav *ngIf="totalPages > 1" class="flex flex-col justify-start items-start">
+    <div class="pagination flex">
+        <div (click)="onPageChange(currentPage - 1)" class="page nav-direction">
+            <mat-icon class="material-icons">keyboard_arrow_left</mat-icon>
+        </div>
+        <div (click)="onPageChange(page)" class="page" *ngFor="let page of toArr(totalPages)"
+            [class.active]="currentPage === page">
+            <span>{{ page }}</span>
+        </div>
+        <div (click)="onPageChange(currentPage + 1)" class="page nav-direction">
+            <mat-icon class="material-icons">keyboard_arrow_right</mat-icon>
+        </div>
+    </div>
+</nav>

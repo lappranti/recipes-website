@@ -22,7 +22,7 @@
                         }
                     </ul>
                 </div>
-                <div class="w-auto flex flex-col gap-8">
+                <div class="w-full flex flex-col gap-8 ">
                     <div class="flex justify-between items-center ">
                         <div class="flex flex-col gap-2 relative max-w-[432px] w-full">
                             <div class="flex items-center relative ">
@@ -69,19 +69,24 @@
                         </div>
 
                     </div>
-                    <ul class=" grid grid-cols-3 gap-8" *ngIf="mealList">
-                        @for (meal of mealList; track $index) {
-                        <li [routerLink]="['/home/meals/', meal.idMeal]"
-                            class="group h-60 p-2 pb-3 bg-semi-dark rounded-xl flex flex-col gap-3 justify-between overflow-hidden cursor-pointer">
-                            <div class="w-full max-w-full overflow-hidden h-44 rounded-xl">
-                                <img [src]="meal.strMealThumb" alt=""
-                                    class=" w-full max-h-full rounded-xl transition-transform duration-300 ease-in-out group-hover:scale-110">
-                            </div>
-                            <div class="text-on-1-line text-base text-light font-medium  flex items-center ">
-                                {{meal.strMeal}}</div>
-                        </li>
-                        }
-                    </ul>
+                    <div class="flex flex-col w-full ">
+                        <ul class=" full grid grid-cols-3 gap-8 " *ngIf="pageMeals">
+                            @for (meal of pageMeals; track $index) {
+                            <li [routerLink]="['/home/meals/', meal.idMeal]"
+                                class="group h-60 p-2 pb-3 bg-semi-dark rounded-xl flex flex-col gap-3 justify-between overflow-hidden cursor-pointer">
+                                <div class="w-full max-w-full overflow-hidden h-44 rounded-xl">
+                                    <img [src]="meal.strMealThumb" alt=""
+                                        class=" w-full max-h-full rounded-xl transition-transform duration-300 ease-in-out group-hover:scale-110">
+                                </div>
+                                <div class="text-on-1-line text-base text-light font-medium  flex items-center ">
+                                    {{meal.strMeal}}</div>
+                            </li>
+                            }
+                        </ul>
+                        <app-pagination *ngIf="mealList" [currentPage]="currentPage" [itemsPerPage]="itemsPerPage"
+                            [items]="mealList" [totalItems]="mealList.length"
+                            (itemsChange)="onItemsChange($event)"></app-pagination>
+                    </div>
                 </div>
             </div>
         </div>
